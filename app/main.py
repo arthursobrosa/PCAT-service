@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, Request, jsonify
+from flask import Flask, render_template, request, Request
 import os
 from werkzeug.utils import secure_filename
-from modules import process_and_merge_workbook, get_suffix, load_acronyms
+from .modules import process_and_merge_workbook, get_suffix, load_acronyms
 
 
 app = Flask(__name__)
@@ -76,4 +76,4 @@ def upload_file():
 
 
 # if __name__ == "__main__":
-#     app.run()
+#     app.run(debug=True)
