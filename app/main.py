@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, Request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
+# from modules import process_and_merge_workbook, get_suffix, load_acronyms
+# from drive_utils import download_file_from_drive, update_file_on_drive
 from .modules import process_and_merge_workbook, get_suffix, load_acronyms
 from .drive_utils import download_file_from_drive, update_file_on_drive
 
@@ -54,6 +56,7 @@ def upload_file():
             process_date_str = request.form['process_date_str']
 
             db_path = os.path.join(app.config['STORAGE_FOLDER'], "banco.xlsx")
+            print(GOOGLE_DRIVE_FILE_ID)
             download_file_from_drive(GOOGLE_DRIVE_FILE_ID, db_path)
 
             print("file downloaded")
