@@ -56,7 +56,6 @@ def upload_file():
             process_date_str = request.form['process_date_str']
 
             db_path = os.path.join(app.config['STORAGE_FOLDER'], "banco.xlsx")
-            print(GOOGLE_DRIVE_FILE_ID)
             download_file_from_drive(GOOGLE_DRIVE_FILE_ID, db_path)
 
             print("file downloaded")

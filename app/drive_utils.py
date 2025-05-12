@@ -7,6 +7,7 @@ from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
 
 def _get_drive_service():
     SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_SERVICE_ACCOUNT_FILE')
+    print(SERVICE_ACCOUNT_FILE)
 
     credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE,
