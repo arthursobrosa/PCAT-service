@@ -1,26 +1,20 @@
 import os
 import io
-import json
-from google.oauth2 import service_account
+from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
 
 
 def _get_drive_service():
-    SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_SERVICE_ACCOUNT_FILE')
-    
-    if not SERVICE_ACCOUNT_FILE:
-        raise ValueError("Variável GOOGLE_SERVICE_ACCOUNT_FILE não configurada")
-    
-    try:
-        credentials_info = json.loads(SERVICE_ACCOUNT_FILE)
-    except json.JSONDecodeError as e:
-        raise ValueError(f"Erro ao decodificar JSON: {str(e)}")
+    # SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
-    credentials = service_account.Credentials.from_service_account_file(
-        credentials_info,
-        scopes=['https://www.googleapis.com/auth/drive']
-    )
+    # credentials = service_account.Credentials.from_service_account_file(
+    #     SERVICE_ACCOUNT_FILE,
+    #     scopes=['https://www.googleapis.com/auth/drive']
+    # )
+
+    scopes=['https://www.googleapis.com/auth/drive']
+    credentials = Credentials.from_environment_variables(scopes=scopes)
 
     return build('drive', 'v3', credentials=credentials)
 
