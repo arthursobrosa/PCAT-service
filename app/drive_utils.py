@@ -7,9 +7,7 @@ from .modules.distributor_data import load_acronyms
 
 
 def _get_drive_service():
-    print(load_acronyms(agent="Concessionária"))
-
-    service_account_file = os.path.join(os.path.dirname(__file__), "credentials/google_account.json")
+    service_account_file = os.path.join(os.path.dirname(__file__), "data")
 
     credentials = service_account.Credentials.from_service_account_file(
         service_account_file,
