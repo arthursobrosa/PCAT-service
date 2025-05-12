@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de arquivos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Upload de arquivo excel</h1>
+
+    <div id="loading"></div>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="agent_type">Tipo de Agente:</label>
+        <select id="agent_type" name="agent_type">
+            <option value="">Selecione:</option>
+            <option value="Concessionária">Concessionária</option>
+            <option value="Permissionária">Permissionária</option>
+        </select>
+
+        <br><br>
+
+        <label for="acronym">Empresa:</label>
+        <select id="acronym" name="acronym"></select>
+
+        <br><br>
+
+        <label for="tariff_process">Tipo de Processo Tarifário:</label>
+        <select id="tariff_process" name="tariff_process">
+            <option value="Ajuste EER ANGRA III">Ajuste EER ANGRA III</option>
+            <option value="Liminar abrace">Liminar abrace</option>
+            <option value="Reajuste">Reajuste</option>
+            <option value="Revisão">Revisão</option>
+            <option value="Revisão Extraordinária">Revisão Extraordinária</option>
+            <option value="Tarifas Iniciais">Tarifas Iniciais</option>
+        </select>
+
+        <br><br>
+
+        <label for="process_date_str">Data do Processo (dd/mm/aaaa):</label>
+        <input type="date" id="process_date_str" name="process_date_str" required>
+
+        <br><br>
+
+        <label for="file">Escolha um arquivo:</label>
+        <input type="file" name="file" required>
+
+        <br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+
+    <script type="text/javascript">
+        const acronymsConcessionaria = {{ acronyms_concessionaria | tojson }};
+        const acronymsPermissionaria = {{ acronyms_permissionaria | tojson }};
+    </script>
+
+    <script src="{{ url_for('static', filename='js/form_logics.js') }}"></script>
+</body>
+</html>
