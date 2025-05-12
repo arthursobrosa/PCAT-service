@@ -1,5 +1,6 @@
 import os
 import io
+import json
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
@@ -7,9 +8,17 @@ from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
 
 def _get_drive_service():
     SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_SERVICE_ACCOUNT_FILE')
+    
+    if not SERVICE_ACCOUNT_FILE:
+        raise ValueError("Variável GOOGLE_SERVICE_ACCOUNT_FILE não configurada")
+    
+    try:
+        credentials_info = json.loads(SERVICE_ACCOUNT_FILE)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Erro ao decodificar JSON: {str(e)}")
 
     credentials = service_account.Credentials.from_service_account_file(
-        SERVICE_ACCOUNT_FILE,
+        credentials_info,
         scopes=['https://www.googleapis.com/auth/drive']
     )
 
@@ -18,7 +27,6 @@ def _get_drive_service():
 
 def download_file_from_drive(file_id: str, destination_path: str):
     service = _get_drive_service()
-    print(service)
     request = service.files().get_media(fileId=file_id)
 
     fh = io.FileIO(destination_path, 'wb')
