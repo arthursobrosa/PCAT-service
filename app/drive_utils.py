@@ -7,7 +7,7 @@ from .modules.distributor_data import load_acronyms
 
 
 def _get_drive_service():
-    service_account_file = os.path.join(os.path.dirname(__file__), "data")
+    service_account_file = os.path.join(os.path.dirname(__file__), "credentials")
 
     credentials = service_account.Credentials.from_service_account_file(
         service_account_file,
