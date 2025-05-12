@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Request
+from flask import Flask, render_template, request, Request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
 from .modules import process_and_merge_workbook, get_suffix, load_acronyms
@@ -73,6 +73,12 @@ def upload_file():
         acronyms_concessionaria=acronyms_concessionaria,
         acronyms_permissionaria=acronyms_permissionaria
     )
+
+
+@app.route('/')
+def index():
+    return redirect(url_for('upload_file'))
+
 
 
 # if __name__ == "__main__":
