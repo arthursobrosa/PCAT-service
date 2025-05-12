@@ -1,22 +1,17 @@
 import os
 import io
-# from google.oauth2.service_account import Credentials 
-import google.auth
+from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
 
 
 def _get_drive_service():
-    # SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+    service_account_file = os.path.join(os.path.dirname(__file__), "credentials/google_account.json")
 
-    # credentials = service_account.Credentials.from_service_account_file(
-    #     SERVICE_ACCOUNT_FILE,
-    #     scopes=['https://www.googleapis.com/auth/drive']
-    # )
-
-    scopes=['https://www.googleapis.com/auth/drive']
-    credentials, project_id = google.auth.default(scopes=scopes)
-    # credentials = Credentials.from_environment_variables(scopes=scopes)
+    credentials = service_account.Credentials.from_service_account_file(
+        service_account_file,
+        scopes=['https://www.googleapis.com/auth/drive']
+    )
 
     return build('drive', 'v3', credentials=credentials)
 
