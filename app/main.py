@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, Request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
 from .modules import process_and_merge_workbook, get_suffix, load_acronyms
+from .drive_utils import download_file_from_drive, update_file_on_drive
 
 
 app = Flask(__name__)
@@ -38,6 +39,9 @@ def _handle_upload(request: Request) -> tuple[str, str]:
     return uploaded_file_path, file_name
 
 
+GOOGLE_DRIVE_FILE_ID = os.getenv("GOOGLE_DRIVE_FILE_ID")
+
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -48,6 +52,9 @@ def upload_file():
             tariff_process = request.form['tariff_process']
             process_date_str = request.form['process_date_str']
 
+            db_path = os.path.join(app.config['STORAGE_FOLDER', "banco.xlsx"])
+            download_file_from_drive(GOOGLE_DRIVE_FILE_ID, db_path)
+
             try:
                 process_and_merge_workbook(
                     uploaded_file_path=uploaded_file_path,
@@ -55,6 +62,8 @@ def upload_file():
                     tariff_process=tariff_process,
                     process_date_str=process_date_str
                 )
+
+                update_file_on_drive(GOOGLE_DRIVE_FILE_ID, db_path)
 
                 if os.path.exists(uploaded_file_path):
                     os.remove(uploaded_file_path)
