@@ -15,6 +15,7 @@ app.config['STORAGE_FOLDER'] = STORAGE_FOLDER
 
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(STORAGE_FOLDER, exist_ok=True)
 
 
 def _allowed_file(file_name: str) -> bool:
