@@ -6,20 +6,7 @@ from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
 
 
 def _get_drive_service():
-    try:
-        print("=== Conteúdo de /run/secrets ===")
-        for name in os.listdir('/run/secrets'):
-            print("  ", name)
-        print("=== Fim da lista ===")
-    except Exception as e:
-        print("Erro ao listar /run/secrets:", e)
-
     SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_SERVICE_ACCOUNT_FILE')
-    print("Valor de GOOGLE_SERVICE_ACCOUNT_FILE:", SERVICE_ACCOUNT_FILE)
-
-
-
-    # SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_SERVICE_ACCOUNT_FILE')
 
     credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE,
@@ -31,6 +18,7 @@ def _get_drive_service():
 
 def download_file_from_drive(file_id: str, destination_path: str):
     service = _get_drive_service()
+    print(service)
     request = service.files().get_media(fileId=file_id)
 
     fh = io.FileIO(destination_path, 'wb')
