@@ -3,14 +3,13 @@ import io
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
-from .modules.distributor_data import load_acronyms
 
 
 def _get_drive_service():
-    service_account_file = os.path.join(os.path.dirname(__file__), "credentials")
+    SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_SERVICE_ACCOUNT_FILE')
 
     credentials = service_account.Credentials.from_service_account_file(
-        service_account_file,
+        SERVICE_ACCOUNT_FILE,
         scopes=['https://www.googleapis.com/auth/drive']
     )
 
