@@ -56,8 +56,6 @@ def upload_file():
             db_path = os.path.join(app.config['STORAGE_FOLDER'], "banco.xlsx")
             download_file_from_drive(GOOGLE_DRIVE_FILE_ID, db_path)
 
-            print("file downloaded")
-
             try:
                 process_and_merge_workbook(
                     uploaded_file_path=uploaded_file_path,
