@@ -16,11 +16,10 @@ def _get_drive_service():
     return build('drive', 'v3', credentials=credentials)
 
 
-def download_file_from_drive(file_id: str):
+def download_file_from_drive(file_id: str, destination_path: str):
     service = _get_drive_service()
     request = service.files().get_media(fileId=file_id)
 
-    destination_path = os.path.join(os.path.dirname(__file__), "storage/banco.xlsx")
     fh = io.FileIO(destination_path, 'wb')
 
     downloader = MediaIoBaseDownload(fh, request)

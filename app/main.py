@@ -13,6 +13,7 @@ ALLOWED_EXTENSIONS = {'.xlsx', '.xlsm'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['STORAGE_FOLDER'] = STORAGE_FOLDER
 
+
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
@@ -52,8 +53,10 @@ def upload_file():
             tariff_process = request.form['tariff_process']
             process_date_str = request.form['process_date_str']
 
-            db_path = os.path.join(app.config['STORAGE_FOLDER', "banco.xlsx"])
+            db_path = os.path.join(app.config['STORAGE_FOLDER'], "banco.xlsx")
             download_file_from_drive(GOOGLE_DRIVE_FILE_ID, db_path)
+
+            print("file downloaded")
 
             try:
                 process_and_merge_workbook(
