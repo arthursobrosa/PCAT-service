@@ -83,6 +83,7 @@ def normalize(text: str) -> str:
         if unicodedata.category(c) != 'Mn'
     )
 
+
 def get_rows_and_columns_from(value: any, worksheet: Worksheet) -> list[tuple[int, int]]:
     coordinates = []
 
